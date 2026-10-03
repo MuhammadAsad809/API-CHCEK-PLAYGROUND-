@@ -37,8 +37,9 @@
         <label class="field-label" for="model">Model</label>
         <div class="select-wrap"><select id="model"></select><span class="select-chevron">⌄</span></div>
 
-        <label class="field-label" for="baseUrl">Base URL <span class="optional">optional</span></label>
+        <div class="label-row"><label class="field-label" for="baseUrl">Base URL <span class="optional">optional</span></label><button id="fetchModels" class="fetch-button" type="button">↻ fetch models</button></div>
         <input id="baseUrl" type="url" autocomplete="off" placeholder="https://api.example.com/v1" />
+        <div id="modelFetchStatus" class="field-hint" aria-live="polite">Use this to discover model IDs exposed by your endpoint.</div>
 
         <label class="field-label" for="apiKey">API key</label>
         <div class="key-wrap"><input id="apiKey" type="password" autocomplete="off" placeholder="sk-••••••••••••••••" /><button id="toggleKey" class="key-toggle" type="button" aria-label="Show API key">show</button></div>
