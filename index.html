@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#070912" />
+  <meta name="description" content="A private, browser-only AI API playground for testing modern LLM providers." />
+  <title>Prism — AI API Playground</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div><div class="ambient ambient-three"></div>
+  <div class="grain"></div>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Prism home"><span class="brand-mark"><i></i><i></i><i></i></span><span>prism<span class="brand-dot">.</span></span></a>
+      <div class="top-actions"><span class="privacy-pill"><span class="live-dot"></span> runs locally</span><button class="icon-button" id="clearAll" title="Clear saved chat history" aria-label="Clear saved chat history">⌫</button></div>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow"><span class="eyebrow-line"></span> PRIVATE AI WORKBENCH</div>
+      <h1>Talk to <em>any</em><br><span class="gradient-text">intelligence.</span></h1>
+      <p class="hero-copy">A beautifully simple, browser-only playground for exploring the world’s most capable models. Your keys never leave this tab.</p>
+    </section>
+
+    <section class="workspace">
+      <aside class="glass-card config-card">
+        <div class="card-heading"><div><span class="section-kicker">01 / CONNECTION</span><h2>Choose your stack</h2></div><span class="secure-lock">◈ secure</span></div>
+        <label class="field-label" for="provider">Provider</label>
+        <div class="select-wrap"><select id="provider"></select><span class="select-chevron">⌄</span></div>
+        <div id="providerHint" class="field-hint"></div>
+
+        <label class="field-label" for="model">Model</label>
+        <div class="select-wrap"><select id="model"></select><span class="select-chevron">⌄</span></div>
+
+        <label class="field-label" for="baseUrl">Base URL <span class="optional">optional</span></label>
+        <input id="baseUrl" type="url" autocomplete="off" placeholder="https://api.example.com/v1" />
+
+        <label class="field-label" for="apiKey">API key</label>
+        <div class="key-wrap"><input id="apiKey" type="password" autocomplete="off" placeholder="sk-••••••••••••••••" /><button id="toggleKey" class="key-toggle" type="button" aria-label="Show API key">show</button></div>
+        <p class="microcopy">Stored only in your browser session. Never sent anywhere except your selected provider.</p>
+
+        <div class="divider"></div>
+        <div class="status-row"><span><span class="status-orb"></span> ready to connect</span><span class="mono">TLS / CORS</span></div>
+      </aside>
+
+      <section class="glass-card conversation-card">
+        <div class="card-heading"><div><span class="section-kicker">02 / PROMPT</span><h2>Start a conversation</h2></div><span class="model-badge" id="modelBadge">—</span></div>
+        <div class="prompt-wrap"><textarea id="prompt" rows="9" placeholder="Ask anything. Explore an idea, debug some code, or challenge a model..."></textarea><div class="prompt-footer"><span class="mono" id="charCount">0 / 8,000</span><span class="prompt-tip">⌘ + ↵ to send</span></div></div>
+        <div class="send-row"><button id="sendButton" class="send-button" type="button"><span class="send-icon">↗</span><span>Send prompt</span><span class="shortcut">⌘ ↵</span></button><button id="stopButton" class="stop-button hidden" type="button">Stop</button><span class="response-time" id="responseTime"></span></div>
+        <div class="error-banner hidden" id="errorBanner" role="alert"></div>
+        <div class="response-header"><span class="section-kicker">03 / RESPONSE</span><span class="mono" id="responseMeta">waiting for a prompt</span></div>
+        <div class="response-area" id="responseArea"><div class="empty-state"><span class="empty-orbit">✦</span><p>Your response will materialize here.</p><small>Configure a provider, then send a prompt to begin.</small></div></div>
+      </section>
+    </section>
+
+    <section class="history-section glass-card">
+      <div class="history-heading"><div><span class="section-kicker">RECENT SESSIONS</span><h2>Conversation history</h2></div><button id="clearHistory" class="text-button" type="button">Clear all <span>↗</span></button></div>
+      <div id="historyList" class="history-list"><div class="history-empty">No saved conversations yet. Your latest exchanges will appear here.</div></div>
+    </section>
+    <footer><span>PRISM / AI API PLAYGROUND</span><span>NO BACKEND · YOUR KEYS STAY YOURS</span></footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
