@@ -36,7 +36,7 @@
 
         <label class="field-label" for="model">Model</label>
         <div class="select-wrap"><select id="model"></select><span class="select-chevron">⌄</span></div>
-        <div id="customModelWrap" class="custom-model-wrap hidden"><input id="customModel" type="text" autocomplete="off" placeholder="Enter your AI model ID, e.g. my-model-v1" /><div class="field-hint">This exact ID will be sent in the API request.</div></div>
+        <div id="customModelWrap" class="custom-model-wrap"><label class="field-label" for="customModel">Custom model ID <span class="optional">for Custom provider</span></label><input id="customModel" type="text" autocomplete="off" placeholder="e.g. my-model-v1" /><div class="field-hint">Enter your exact AI model ID. Used when Custom / OpenAI-compatible is selected.</div></div>
 
         <div class="label-row"><label class="field-label" for="baseUrl">Base URL <span class="optional">optional</span></label><button id="fetchModels" class="fetch-button" type="button">↻ fetch models</button></div>
         <input id="baseUrl" type="url" autocomplete="off" placeholder="https://api.example.com/v1" />
