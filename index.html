@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#f6f7fb">
   <meta name="description" content="PDFly is a private browser-based PDF editor. Files never leave your device.">
   <title>PDFly — Edit PDFs privately</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=pdfly-2">
 </head>
 <body>
   <div class="app-shell">
@@ -64,6 +64,6 @@
   <dialog id="signatureDialog" class="modal"><form method="dialog" id="signatureForm"><div class="modal-head"><div><span class="eyebrow">SIGN DOCUMENT</span><h2>Add signature</h2></div><button class="icon-btn" value="cancel">×</button></div><div class="tabs"><button type="button" class="tab active" data-sign-tab="draw">Draw</button><button type="button" class="tab" data-sign-tab="type">Type</button><button type="button" class="tab" data-sign-tab="upload">Upload</button></div><div class="sign-panel" data-sign-panel="draw"><canvas id="signatureCanvas" width="560" height="190"></canvas><button type="button" class="text-btn" id="clearSignature">Clear drawing</button></div><div class="sign-panel hidden" data-sign-panel="type"><input id="signatureText" class="signature-input" placeholder="Your name"><select id="signatureFont"><option value="cursive">Cursive</option><option value="serif">Serif</option><option value="sans-serif">Sans serif</option></select></div><div class="sign-panel hidden" data-sign-panel="upload"><button type="button" class="btn btn-secondary" id="signatureUploadBtn">Choose signature image</button><span id="signatureFileName">No image selected</span></div><div class="modal-actions"><button class="btn btn-secondary" value="cancel">Cancel</button><button class="btn btn-primary" id="addSignatureConfirm" value="default">Add signature</button></div></form></dialog>
   <div class="toast" id="toast" role="status"></div>
   <script src="vendor/pdf-lib.min.js"></script>
-  <script type="module" src="script.js"></script>
+  <script type="module" src="script.js?v=pdfly-2"></script>
 </body>
 </html>
