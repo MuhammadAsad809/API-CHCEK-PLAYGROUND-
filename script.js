@@ -8,7 +8,7 @@ const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const state = { bytes:null, pdfjs:null, pdfDoc:null, pages:[], current:0, zoom:1, tool:'select', history:[], future:[], selected:new Set(), pending:null, drawing:null, shape:'rectangle', signatureImage:null, fileName:'Untitled.pdf' };
 const els = { landing:$('#landingState'), editor:$('#editorState'), canvas:$('#pdfCanvas'), overlay:$('#overlayCanvas'), stage:$('#pageStage'), area:$('#canvasArea'), empty:$('#canvasEmpty'), thumbs:$('#thumbList'), fileName:$('#fileName'), fileMeta:$('#fileMeta'), pageCount:$('#pageCount'), total:$('#totalPages'), current:$('#currentPage'), zoom:$('#zoomLabel'), save:$('#savePdfBtn'), download:$('#downloadBtn'), toast:$('#toast'), textDialog:$('#textDialog'), shapeDialog:$('#shapeDialog'), signatureDialog:$('#signatureDialog'), signatureCanvas:$('#signatureCanvas') };
 
-function clonePages(pages){ return pages.map(p=>({...p,annotations:p.annotations.map(a=>({...a,points:a.points?.map(pt=>({...pt})),src:a.src})})); }
+function clonePages(pages){ return pages.map(p=>({...p,annotations:(p.annotations||[]).map(a=>({...a,points:a.points?.map(pt=>({...pt}))}))})); }
 function snapshot(){ return {pages:clonePages(state.pages),current:state.current,selected:[...state.selected]}; }
 function restore(s){ state.pages=clonePages(s.pages); state.current=Math.min(s.current,state.pages.length-1); state.selected=new Set(s.selected); renderAll(); }
 function mutate(fn){ state.history.push(snapshot()); if(state.history.length>60)state.history.shift(); state.future=[]; fn(); renderAll(); }
