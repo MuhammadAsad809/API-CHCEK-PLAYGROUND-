@@ -1,27 +1,48 @@
-# Prism — AI API Playground
+# PDFly — Private browser PDF editor
 
-A premium, single-page AI API playground built with **HTML, Tailwind CDN, custom CSS, and vanilla JavaScript**. It runs fully in the browser and requires no backend.
+PDFly is a static, browser-based PDF editor. It uses **pdf.js** to render PDFs and **pdf-lib** to create the edited output. Files are read from local device memory and are never uploaded to an application server.
 
-## Features
+## Included
 
-- Liquid-glass, responsive dark UI with animated ambient gradients, frosted panels, glows, and motion.
-- Provider presets for OpenAI, Grok, Claude, Gemini, OpenRouter, Together AI, Fireworks AI, Groq, DeepSeek, Mistral, plus custom OpenAI-compatible endpoints.
-- Common model dropdowns that update with the selected provider.
-- Browser-side API requests with provider-specific payload handling for Gemini and Claude.
-- Prompt character count, send spinner, stop request, timing, readable errors, and keyboard shortcut (`⌘/Ctrl + Enter`).
-- Conversation history in localStorage with replay and clear controls.
-- GitHub Pages deployment through `.github/workflows/pages.yml`.
+- Drag-and-drop or file-picker PDF import
+- Local PDF rendering with page thumbnails
+- Add text with font, size, color, alignment, bold, and italic options
+- Freehand drawing and area highlighting
+- Rectangles, circles, lines, and arrows
+- Add local images
+- Signatures by drawing, typing, or uploading an image
+- Delete, duplicate, rotate, add blank pages, and drag-reorder pages
+- Select pages and extract them into a new PDF
+- Merge multiple PDFs locally
+- Undo/redo for page and annotation edits
+- Zoom controls, page navigation, file size, and page count
+- Download/export edited PDFs locally
+- Dark/light theme
+- No authentication, backend, database, or upload API
 
 ## Run locally
 
-Open `index.html` directly, or serve the folder with any static server:
+Because PDFly uses ES modules, serve the folder over a local static server rather than opening `index.html` directly:
 
 ```bash
 python3 -m http.server 8080
 ```
 
-Then visit `http://localhost:8080`.
+Open `http://localhost:8080`.
 
-## Important browser note
+## Deployment
 
-The app sends the key directly from the browser to the selected provider. It does not persist API keys or transmit them to a Prism server. Some providers may block direct browser requests with CORS; in that case, use a provider/endpoint that permits browser origins or a compatible gateway. Do not use this public demo with a key you cannot safely rotate.
+The project is compatible with GitHub Pages and Cloudflare Pages. Deploy the repository root as a static site. The `.github/workflows/pages.yml` workflow publishes the root directory to GitHub Pages.
+
+The runtime libraries are vendored in `vendor/`:
+
+- `vendor/pdf.min.mjs` and `vendor/pdf.worker.min.mjs` — pdf.js
+- `vendor/pdf-lib.min.js` — pdf-lib
+
+## Privacy
+
+PDF bytes remain in browser memory. Export creates a local Blob download. No fetch request is made for user PDFs. API errors are shown locally and large files are processed with browser workers where supported by pdf.js.
+
+## Browser support
+
+Use a current Chromium, Firefox, Safari, or Edge release with ES module, File API, Canvas, and Web Worker support. Very large or encrypted PDFs may be rejected by the underlying PDF libraries.

@@ -1,71 +1,69 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#070912" />
-  <meta name="description" content="A private, browser-only AI API playground for testing modern LLM providers." />
-  <title>Prism — AI API Playground</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f6f7fb">
+  <meta name="description" content="PDFly is a private browser-based PDF editor. Files never leave your device.">
+  <title>PDFly — Edit PDFs privately</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div><div class="ambient ambient-three"></div>
-  <div class="grain"></div>
-  <main class="shell">
-    <header class="topbar">
-      <a class="brand" href="#" aria-label="Prism home"><span class="brand-mark"><i></i><i></i><i></i></span><span>prism<span class="brand-dot">.</span></span></a>
-      <div class="top-actions"><span class="privacy-pill"><span class="live-dot"></span> runs locally</span><button class="icon-button" id="clearAll" title="Clear saved chat history" aria-label="Clear saved chat history">⌫</button></div>
+  <div class="app-shell">
+    <header class="site-header">
+      <a class="logo" href="#" aria-label="PDFly home"><span class="logo-mark">✦</span><span>PDFly</span></a>
+      <div class="header-actions">
+        <span class="privacy-note"><span class="privacy-dot"></span>100% local</span>
+        <button class="btn btn-secondary" id="openPdfBtn">Open PDF</button>
+        <button class="btn btn-primary" id="savePdfBtn" disabled>Save PDF <span class="key-hint">Ctrl S</span></button>
+        <button class="icon-btn" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">◐</button>
+      </div>
     </header>
 
-    <section class="hero">
-      <div class="eyebrow"><span class="eyebrow-line"></span> PRIVATE AI WORKBENCH</div>
-      <h1>Talk to <em>any</em><br><span class="gradient-text">intelligence.</span></h1>
-      <p class="hero-copy">A beautifully simple, browser-only playground for exploring the world’s most capable models. Your keys never leave this tab.</p>
-    </section>
-
-    <section class="workspace">
-      <aside class="glass-card config-card">
-        <div class="card-heading"><div><span class="section-kicker">01 / CONNECTION</span><h2>Choose your stack</h2></div><span class="secure-lock">◈ secure</span></div>
-        <label class="field-label" for="provider">Provider</label>
-        <div class="select-wrap"><select id="provider"></select><span class="select-chevron">⌄</span></div>
-        <div id="providerHint" class="field-hint"></div>
-
-        <label class="field-label" for="model">Model</label>
-        <div class="select-wrap"><select id="model"></select><span class="select-chevron">⌄</span></div>
-        <div id="customModelWrap" class="custom-model-wrap"><label class="field-label" for="customModel">Custom model ID <span class="optional">for Custom provider</span></label><input id="customModel" type="text" autocomplete="off" placeholder="e.g. my-model-v1" /><div class="field-hint">Enter your exact AI model ID. Used when Custom / OpenAI-compatible is selected.</div></div>
-
-        <div class="label-row"><label class="field-label" for="baseUrl">Base URL <span class="optional">optional</span></label><button id="fetchModels" class="fetch-button" type="button">↻ fetch models</button></div>
-        <input id="baseUrl" type="url" autocomplete="off" placeholder="https://api.example.com/v1" />
-        <div id="modelFetchStatus" class="field-hint" aria-live="polite">Use this to discover model IDs exposed by your endpoint.</div>
-
-        <label class="field-label" for="apiKey">API key</label>
-        <div class="key-wrap"><input id="apiKey" type="password" autocomplete="off" placeholder="sk-••••••••••••••••" /><button id="toggleKey" class="key-toggle" type="button" aria-label="Show API key">show</button></div>
-        <p class="microcopy">Stored only in your browser session. Never sent anywhere except your selected provider.</p>
-
-        <div class="divider"></div>
-        <div class="status-row"><span><span class="status-orb"></span> ready to connect</span><span class="mono">TLS / CORS</span></div>
-      </aside>
-
-      <section class="glass-card conversation-card">
-        <div class="card-heading"><div><span class="section-kicker">02 / PROMPT</span><h2>Start a conversation</h2></div><span class="model-badge" id="modelBadge">—</span></div>
-        <div class="prompt-wrap"><textarea id="prompt" rows="9" placeholder="Ask anything. Explore an idea, debug some code, or challenge a model..."></textarea><div class="prompt-footer"><span class="mono" id="charCount">0 / 8,000</span><span class="prompt-tip">⌘ + ↵ to send</span></div></div>
-        <div class="send-row"><button id="sendButton" class="send-button" type="button"><span class="send-icon">↗</span><span>Send prompt</span><span class="shortcut">⌘ ↵</span></button><button id="stopButton" class="stop-button hidden" type="button">Stop</button><span class="response-time" id="responseTime"></span></div>
-        <div class="error-banner hidden" id="errorBanner" role="alert"></div>
-        <div class="response-header"><span class="section-kicker">03 / RESPONSE</span><span class="mono" id="responseMeta">waiting for a prompt</span></div>
-        <div class="response-area" id="responseArea"><div class="empty-state"><span class="empty-orbit">✦</span><p>Your response will materialize here.</p><small>Configure a provider, then send a prompt to begin.</small></div></div>
+    <main>
+      <section class="landing" id="landingState">
+        <div class="landing-copy">
+          <span class="eyebrow">PRIVATE PDF WORKSPACE</span>
+          <h1>Edit PDFs<br><span>without uploading.</span></h1>
+          <p>Fast, private, and completely client-side. Your files never leave your device.</p>
+          <div class="landing-actions"><button class="btn btn-primary btn-large" id="uploadPdfBtn">Upload PDF <span>↗</span></button><button class="text-btn" id="mergePdfBtn">Merge multiple PDFs</button></div>
+          <div class="trust-row"><span>✓ No account</span><span>✓ No server</span><span>✓ Works offline</span></div>
+        </div>
+        <div class="drop-zone" id="dropZone" tabindex="0" role="button" aria-label="Drop a PDF or choose a file">
+          <div class="drop-icon">＋</div><strong>Drop your PDF here</strong><span>or click to browse from your device</span><small>PDF files only · processed in your browser</small>
+        </div>
       </section>
-    </section>
 
-    <section class="history-section glass-card">
-      <div class="history-heading"><div><span class="section-kicker">RECENT SESSIONS</span><h2>Conversation history</h2></div><button id="clearHistory" class="text-button" type="button">Clear all <span>↗</span></button></div>
-      <div id="historyList" class="history-list"><div class="history-empty">No saved conversations yet. Your latest exchanges will appear here.</div></div>
-    </section>
-    <footer><span>PRISM / AI API PLAYGROUND</span><span>NO BACKEND · YOUR KEYS STAY YOURS</span></footer>
-  </main>
-  <script src="app.js"></script>
+      <section class="editor" id="editorState" hidden>
+        <div class="document-bar"><div class="document-title"><span class="pdf-badge">PDF</span><div><strong id="fileName">Untitled.pdf</strong><small id="fileMeta">0 KB · 0 pages</small></div></div><div class="document-actions"><button class="text-btn" id="newPdfBtn">＋ New PDF</button><button class="text-btn" id="extractBtn">Extract selected</button><button class="text-btn danger-text" id="clearAllBtn">Clear all</button></div></div>
+        <div class="editor-layout">
+          <aside class="sidebar" aria-label="PDF pages">
+            <div class="sidebar-head"><strong>Pages</strong><span id="pageCount">0</span></div>
+            <div class="page-tools"><button class="mini-btn" id="addPageBtn" title="Add blank page">＋ page</button><button class="mini-btn" id="duplicatePageBtn" title="Duplicate selected page">⧉ copy</button><button class="mini-btn" id="deletePageBtn" title="Delete selected page">⌫ delete</button><button class="mini-btn" id="rotatePageBtn" title="Rotate selected page">↻ rotate</button></div>
+            <div class="thumb-list" id="thumbList"></div>
+            <div class="sidebar-foot"><button class="mini-btn wide" id="mergeSidebarBtn">＋ Merge PDFs</button></div>
+          </aside>
+          <section class="workbench">
+            <div class="toolbar" role="toolbar" aria-label="PDF editing tools">
+              <div class="tool-group"><button class="tool active" data-tool="select" title="Select / move">↖ <span>Select</span></button><button class="tool" data-tool="text" title="Add text">T <span>Text</span></button><button class="tool" data-tool="draw" title="Freehand draw">⌁ <span>Draw</span></button><button class="tool" data-tool="highlight" title="Highlight an area">▰ <span>Highlight</span></button><button class="tool" data-tool="image" title="Add image">▧ <span>Image</span></button><button class="tool" data-tool="signature" title="Add signature">✎ <span>Sign</span></button><button class="tool" data-tool="shape" title="Add shapes">□ <span>Shapes</span></button></div>
+              <div class="tool-divider"></div><div class="tool-group compact"><button class="tool" id="undoBtn" title="Undo">↶</button><button class="tool" id="redoBtn" title="Redo">↷</button></div><div class="tool-divider"></div><div class="zoom-controls"><button class="icon-btn small" id="zoomOut" title="Zoom out">−</button><span id="zoomLabel">100%</span><button class="icon-btn small" id="zoomIn" title="Zoom in">＋</button></div>
+            </div>
+            <div class="canvas-area" id="canvasArea"><div class="canvas-empty" id="canvasEmpty"><span>✦</span><p>Select a page to start editing</p></div><div class="page-stage" id="pageStage"><canvas id="pdfCanvas"></canvas><canvas id="overlayCanvas"></canvas><div class="stage-hint" id="stageHint">Click anywhere on the page to place an object</div></div></div>
+            <div class="workbench-footer"><div class="page-nav"><button class="icon-btn small" id="prevPage" title="Previous page">‹</button><span>Page <strong id="currentPage">1</strong> of <strong id="totalPages">0</strong></span><button class="icon-btn small" id="nextPage" title="Next page">›</button></div><div class="footer-actions"><span id="selectionInfo">No selection</span><button class="btn btn-primary" id="downloadBtn" disabled>Download PDF <span>↓</span></button></div></div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <input type="file" id="pdfInput" accept="application/pdf,.pdf" hidden>
+  <input type="file" id="mergeInput" accept="application/pdf,.pdf" multiple hidden>
+  <input type="file" id="imageInput" accept="image/*" hidden>
+  <dialog id="textDialog" class="modal"><form method="dialog" id="textForm"><div class="modal-head"><div><span class="eyebrow">ADD CONTENT</span><h2>Add text</h2></div><button class="icon-btn" value="cancel" aria-label="Close">×</button></div><label>Text<textarea id="textValue" required placeholder="Type your text..."></textarea></label><div class="form-grid"><label>Font<select id="textFont"><option value="Helvetica">Helvetica</option><option value="Times-Roman">Times</option><option value="Courier">Courier</option></select></label><label>Size<input id="textSize" type="number" min="6" max="120" value="18"></label><label>Color<input id="textColor" type="color" value="#182033"></label><label>Align<select id="textAlign"><option value="left">Left</option><option value="center">Center</option><option value="right">Right</option></select></label></div><div class="check-row"><label><input id="textBold" type="checkbox"> Bold</label><label><input id="textItalic" type="checkbox"> Italic</label></div><div class="modal-actions"><button class="btn btn-secondary" value="cancel">Cancel</button><button class="btn btn-primary" id="addTextConfirm" value="default">Add text</button></div></form></dialog>
+  <dialog id="shapeDialog" class="modal"><form method="dialog" id="shapeForm"><div class="modal-head"><div><span class="eyebrow">ADD SHAPE</span><h2>Choose a shape</h2></div><button class="icon-btn" value="cancel">×</button></div><div class="shape-grid"><button value="rectangle" data-shape="rectangle">▱<span>Rectangle</span></button><button value="circle" data-shape="circle">○<span>Circle</span></button><button value="line" data-shape="line">╱<span>Line</span></button><button value="arrow" data-shape="arrow">➜<span>Arrow</span></button></div><div class="form-grid"><label>Stroke<input id="shapeColor" type="color" value="#2358d9"></label><label>Width<input id="shapeWidth" type="number" min="1" max="20" value="2"></label></div></form></dialog>
+  <dialog id="signatureDialog" class="modal"><form method="dialog" id="signatureForm"><div class="modal-head"><div><span class="eyebrow">SIGN DOCUMENT</span><h2>Add signature</h2></div><button class="icon-btn" value="cancel">×</button></div><div class="tabs"><button type="button" class="tab active" data-sign-tab="draw">Draw</button><button type="button" class="tab" data-sign-tab="type">Type</button><button type="button" class="tab" data-sign-tab="upload">Upload</button></div><div class="sign-panel" data-sign-panel="draw"><canvas id="signatureCanvas" width="560" height="190"></canvas><button type="button" class="text-btn" id="clearSignature">Clear drawing</button></div><div class="sign-panel hidden" data-sign-panel="type"><input id="signatureText" class="signature-input" placeholder="Your name"><select id="signatureFont"><option value="cursive">Cursive</option><option value="serif">Serif</option><option value="sans-serif">Sans serif</option></select></div><div class="sign-panel hidden" data-sign-panel="upload"><button type="button" class="btn btn-secondary" id="signatureUploadBtn">Choose signature image</button><span id="signatureFileName">No image selected</span></div><div class="modal-actions"><button class="btn btn-secondary" value="cancel">Cancel</button><button class="btn btn-primary" id="addSignatureConfirm" value="default">Add signature</button></div></form></dialog>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="vendor/pdf-lib.min.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
