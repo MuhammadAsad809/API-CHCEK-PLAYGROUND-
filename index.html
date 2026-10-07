@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#050508">
   <meta name="description" content="Gojo Satoru vs Ryomen Sukuna — A cinematic scroll-driven frame animation and domain collision experience.">
+  <meta property="og:title" content="DOMAIN CLASH — Gojo vs Sukuna">
+  <meta property="og:description" content="Gojo Satoru vs Ryomen Sukuna — A cinematic scroll-driven frame animation and domain collision experience.">
   <title>DOMAIN CLASH — Gojo vs Sukuna</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,10 +24,20 @@
       </div>
     </div>
     <div class="hud-status">
-      <span class="live-pill"><span class="pulse-dot"></span> SEQUENCE 100% LOCAL</span>
-      <button class="sound-toggle" id="soundBtn" title="Toggle Synthesized Ambience" aria-label="Toggle Sound">
-        <span class="sound-icon">🔈</span> <span class="sound-label">SOUND: OFF</span>
-      </button>
+      <div class="playback-controls">
+        <button class="btn-ctrl" id="playBtn" title="Toggle Cinematic Auto-Play (Space)" aria-label="Toggle Auto-Play">
+          <span class="ctrl-icon">▶</span> <span class="ctrl-label">AUTO</span>
+        </button>
+        <button class="btn-ctrl" id="speedBtn" title="Cycle Playback Speed (0.5x, 1x, 2x)" aria-label="Playback Speed">1.0×</button>
+      </div>
+      <div class="audio-hud">
+        <button class="sound-toggle" id="soundBtn" title="Toggle Synthesized Jujutsu Audio (M)" aria-label="Toggle Sound">
+          <span class="sound-icon">🔈</span> <span class="sound-label">SOUND: OFF</span>
+        </button>
+        <div class="audio-meter" id="audioMeter" aria-hidden="true">
+          <span class="meter-bar"></span><span class="meter-bar"></span><span class="meter-bar"></span><span class="meter-bar"></span>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -44,11 +56,14 @@
           <strong class="glitch-text" data-text="THE STRONGEST">THE STRONGEST</strong>
         </h1>
         <p class="hero-subtitle">
-          An interactive frame-by-frame journey through the ultimate domain clash. Scroll to channel the cursed energy.
+          An interactive frame-by-frame journey through the ultimate domain clash. Scroll or hit Auto-Play to channel the cursed energy.
         </p>
-        <div class="scroll-prompt">
-          <div class="mouse-icon"><span class="wheel"></span></div>
-          <span class="prompt-text">SCROLL DOWN TO INITIATE</span>
+        <div class="scroll-prompt-group">
+          <div class="scroll-prompt">
+            <div class="mouse-icon"><span class="wheel"></span></div>
+            <span class="prompt-text">SCROLL TO CHANNEL CURSED ENERGY</span>
+          </div>
+          <button class="btn-hero-launch" id="heroPlayBtn">▶ WATCH DOMAIN CLASH</button>
         </div>
       </div>
     </section>
@@ -61,13 +76,18 @@
         
         <!-- HUD Telemetry -->
         <div class="hud-telemetry top-left">
-          <div class="telemetry-label">TARGET MATRIX</div>
-          <div class="telemetry-val" id="telemetryTarget">GOJO ✕ SUKUNA</div>
+          <div class="telemetry-label">DOMAIN BALANCE · CLASH MATRIX</div>
+          <div class="domain-balance-bar">
+            <div class="balance-void" id="balanceVoid" style="width: 50%"></div>
+            <div class="balance-shrine" id="balanceShrine" style="width: 50%"></div>
+          </div>
+          <div class="telemetry-val" id="telemetryTarget">GOJO 50% ✕ SUKUNA 50%</div>
         </div>
 
         <div class="hud-telemetry top-right">
-          <div class="telemetry-label">CURSED OUTPUT</div>
+          <div class="telemetry-label">CURSED OUTPUT · SPEED</div>
           <div class="telemetry-val" id="telemetryEnergy">120% MAX</div>
+          <div class="telemetry-sub" id="telemetrySub">NORMALIZED FLOW</div>
         </div>
 
         <!-- Dynamic Story Card -->
@@ -79,11 +99,19 @@
 
         <!-- Frame Scrubber & Timeline -->
         <div class="hud-timeline">
-          <div class="timeline-bar">
+          <div class="timeline-bar" id="timelineBar" role="slider" aria-label="Timeline Scrubber" tabindex="0">
+            <div class="timeline-track"></div>
             <div class="timeline-fill" id="timelineFill"></div>
+            <div class="timeline-thumb" id="timelineThumb"></div>
+            <div class="timeline-tooltip" id="timelineTooltip">FRAME 01</div>
           </div>
           <div class="timeline-meta">
             <span id="frameCounter">FRAME: 01 / 12</span>
+            <div class="timeline-shortcuts">
+              <span>[SPACE] PLAY</span>
+              <span>[↑/↓] STEP</span>
+              <span>[M] MUTE</span>
+            </div>
             <span id="scrollPercent">0%</span>
           </div>
         </div>

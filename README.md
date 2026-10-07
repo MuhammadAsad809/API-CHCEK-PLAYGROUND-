@@ -1,23 +1,35 @@
-# Domain Clash — Gojo vs Sukuna
+# DOMAIN CLASH — Gojo vs Sukuna
 
-A cinematic, browser-based scroll animation built from the uploaded frame sequence. The main GitHub Pages homepage is a sticky HTML5 Canvas scene: scroll position drives a smooth interpolated transition through 12 local JPG frames.
+A cinematic, interactive scroll-driven domain collision and frame animation experience between Gojo Satoru and Ryomen Sukuna. Built with HTML5 Canvas, procedural Web Audio synthesis, and zero external dependencies.
 
-## Architecture
+## Features
 
-This is a static website with zero backend and zero database. All animation assets are stored in `assets/scroll-frames/`, preloaded by `script.js`, and rendered locally in the user’s browser. The optional ambience uses the Web Audio API and never loads an audio file or makes a network request.
+- **Sub-Pixel Canvas Animation**: Smooth lerp interpolation with velocity-aware chromatic aberration and camera depth zoom.
+- **Procedural Jujutsu VFX**:
+  - **Sukuna's Slashes**: Dynamic Dismantle & Cleave slicing cuts across the viewport with particle sparks.
+  - **Gojo's Infinity**: Ethereal cyan particle vortices and gravitational space lensing.
+  - **Domain Clash Climax**: Radial supernova distortion waves and energy clashing between red and blue.
+- **Cinematic Auto-Play**: Watch the domain collision hands-free with selectable playback speeds (0.5× cinematic slow-mo, 1.0× battle standard, 2.0× hyper blitz).
+- **Interactive Scrubber**: Drag or click anywhere on the timeline scrubber with live phase preview tooltip.
+- **Live Cursed Telemetry**:
+  - Dynamic Cursed Energy Output gauge (120% to 500% Black Flash with neon surge).
+  - Domain Tug-of-War Balance meter tracking Limitless Void vs Malevolent Shrine dominance.
+- **Synthesized Jujutsu Audio Engine**: Multi-track procedural audio (sub-bass cosmic drone, velocity surge, and razor-sharp slicing noise) built entirely using the Web Audio API.
+- **Keyboard Shortcuts**:
+  - `[SPACE]` Toggle Auto-Play
+  - `[↑ / ↓]` or `[← / →]` Step frame by frame
+  - `[M]` Toggle synthesized audio
 
-## Run locally
+## Deployment to GitHub Pages
 
-```bash
-python3 -m http.server 8080
-```
+This app is 100% static, client-side, and directly compatible with GitHub Pages:
 
-Then open `http://localhost:8080/`.
-
-## Deployment
-
-The repository root is deployable directly on GitHub Pages or Cloudflare Pages. The existing `.github/workflows/pages.yml` workflow publishes the repository root. `CNAME` keeps the configured custom domain.
-
-## Controls
-
-Scroll through the tall scene to control the frame sequence. The Replay button returns to the hero section. The sound button toggles a subtle locally generated ambient tone using the Web Audio API.
+1. **Automated Deployment**: The repository contains `.github/workflows/pages.yml` which automatically deploys the repository root to GitHub Pages upon pushing changes to the `main` branch.
+2. **Custom Domain**: The included `CNAME` file preserves your custom domain (`rzxly.cyou`).
+3. **Local Development**:
+   ```bash
+   npm run dev
+   # or
+   npx serve .
+   ```
+   Open `http://localhost:3000/`.
